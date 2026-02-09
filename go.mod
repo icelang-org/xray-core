@@ -6,7 +6,7 @@ require (
 	github.com/cloudflare/circl v1.6.1
 	github.com/gorilla/websocket v1.5.3
 	github.com/miekg/dns v1.1.67
-	github.com/pires/go-proxyproto v0.8.1
+	github.com/pires/go-proxyproto v0.10.0
 	github.com/quic-go/quic-go v0.54.0
 	github.com/refraction-networking/utls v1.8.0
 	github.com/sagernet/sing v0.5.1
