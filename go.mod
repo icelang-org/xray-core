@@ -4,6 +4,7 @@ go 1.24.3
 
 require (
 	github.com/cloudflare/circl v1.6.1
+	github.com/fsnotify/fsnotify v1.7.0
 	github.com/gorilla/websocket v1.5.3
 	github.com/miekg/dns v1.1.67
 	github.com/pires/go-proxyproto v0.8.1
