@@ -68,11 +68,13 @@ func DecodeJSONConfig(reader io.Reader) (*conf.Config, error) {
 }
 
 func LoadJSONConfig(reader io.Reader) (*core.Config, error) {
+	// 读取 JSON 配置
 	jsonConfig, err := DecodeJSONConfig(reader)
 	if err != nil {
 		return nil, err
 	}
 
+	// 解析 JSON 配置为 core.Config
 	pbConfig, err := jsonConfig.Build()
 	if err != nil {
 		return nil, errors.New("failed to parse json config").Base(err)

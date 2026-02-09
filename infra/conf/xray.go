@@ -363,6 +363,7 @@ func (c *StatsConfig) Build() (*stats.Config, error) {
 	return &stats.Config{}, nil
 }
 
+// Config 整个项目的核心配置全在这里了
 type Config struct {
 	// Deprecated: Global transport config is no longer used
 	// left for returning error

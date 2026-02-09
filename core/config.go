@@ -142,6 +142,7 @@ func LoadConfig(formatName string, input interface{}) (*Config, error) {
 		return ConfigBuilderForFiles(files)
 	case io.Reader:
 		if f, found := configLoaderByName[formatName]; found {
+			// 配置文件，代码走到这里
 			return f.Loader(v)
 		} else {
 			return nil, errors.New("Unable to load config in", formatName).AtWarning()
