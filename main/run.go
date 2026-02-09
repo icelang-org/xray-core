@@ -44,7 +44,7 @@ The -dump flag tells Xray to print the merged config.
 
 func init() {
 	cmdRun.Run = executeRun // break init loop
-	log.SetFlags(log.Ldate | log.Ltime | log.Lmicroseconds)
+	log.SetFlags(log.Ldate | log.Ltime)
 }
 
 var (
@@ -172,6 +172,7 @@ func getConfigFilePath(verbose bool) cmdarg.Arg {
 	}
 
 	if workingDir, err := os.Getwd(); err == nil {
+		log.Println("workingDir: ", workingDir)
 		configFile := filepath.Join(workingDir, "config.json")
 		if fileExists(configFile) {
 			if verbose {
