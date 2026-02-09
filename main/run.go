@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"os"
 	"os/signal"
@@ -76,18 +75,18 @@ func executeRun(cmd *base.Command, args []string) {
 	printVersion()
 	server, err := startXray()
 	if err != nil {
-		fmt.Println("Failed to start:", err)
+		log.Println("Failed to start:", err)
 		// Configuration error. Exit with a special value to prevent systemd from restarting.
 		os.Exit(23)
 	}
 
 	if *test {
-		fmt.Println("Configuration OK.")
+		log.Println("Configuration OK.")
 		os.Exit(0)
 	}
 
 	if err := server.Start(); err != nil {
-		fmt.Println("Failed to start:", err)
+		log.Println("Failed to start:", err)
 		os.Exit(-1)
 	}
 	defer server.Close()
@@ -112,11 +111,11 @@ func executeRun(cmd *base.Command, args []string) {
 func dumpConfig() int {
 	files := getConfigFilePath(false)
 	if config, err := core.GetMergedConfig(files); err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		time.Sleep(1 * time.Second)
 		return 23
 	} else {
-		fmt.Print(config)
+		log.Print(config)
 	}
 	return 0
 }
