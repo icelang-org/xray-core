@@ -1,3 +1,6 @@
+根据 Xray-core-v25.8.3
+大量删除 test等废代码，加速编译
+
 # Project X
 
 [Project X](https://github.com/XTLS) originates from XTLS protocol, providing a set of network tools such as [Xray-core](https://github.com/XTLS/Xray-core) and [REALITY](https://github.com/XTLS/REALITY).
