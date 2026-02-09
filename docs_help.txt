@@ -1,0 +1,63 @@
+
+
+ADD https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/geoip.dat /tmp/geodat/geoip.dat
+ADD https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/geosite.dat /tmp/geodat/geosite.dat
+
+COPY --from=build --chown=0:0 --chmod=755 /src/xray /usr/local/bin/xray
+COPY --from=build --chown=0:0 --chmod=755 /tmp/empty /usr/local/share/xray
+
+dat 文件优先顺序
+		filepath.Join("/usr/local/share/xray/", file),
+		filepath.Join("/usr/share/xray/", file),
+		filepath.Join("/opt/share/xray/", file),
+
+-trimpath
+作用：
+移除生成的可执行文件中记录的绝对路径信息，使构建结果可重现（reproducible builds）。
+详细说明：
+Go 编译器默认会在二进制文件中嵌入源代码的完整路径（例如 /home/user/project/main.go）。这可能导致：
+不同机器上编译出的二进制不一致（即使代码完全一样）；
+泄露本地开发路径信息。
+使用 -trimpath 后，Go 会将这些路径替换为相对路径或标准化形式（如 _ 或模块路径），从而提高构建的一致性和安全性。
+
+
+
+-buildvcs=false
+作用：
+禁止 Go 自动将版本控制系统（VCS，如 Git）的元信息（如 commit hash、是否 dirty 等）嵌入到二进制中。
+背景：
+从 Go 1.18 开始，如果项目在 Git 仓库中，go build 默认会自动读取 .git 信息，并通过 debug/buildinfo 包写入二进制（可通过 go version -m your_binary 查看）。
+为什么要关掉？
+减小二进制体积（虽然很小）；
+避免泄露内部 commit 信息；
+在 CI/CD 中确保构建行为一致（尤其当构建环境没有 .git 目录时）；
+某些安全或合规要求。
+
+
+-ldflags=... 中的 -buildid=
+在你的命令中是：
+bash
+
+编辑
+
+-ldflags="... -buildid="
+作用：
+将 Go 二进制中的 build ID 设置为空字符串（即清除它）。
+什么是 build ID？
+Go 编译器会给每个二进制生成一个唯一的 build ID（基于哈希），用于：
+调试器识别；
+go tool nm / dlv 等工具关联符号；
+缓存机制（如 go build 的缓存）。
+为什么清空？
+追求完全可重现构建（reproducible builds）：build ID 默认包含时间戳或随机因素，会导致即使相同代码多次编译也产生不同二进制；
+安全或隐私考虑（避免唯一标识符）；
+减小二进制（极微小）。
+⚠️ 注意：清空 build ID 可能影响某些调试工具的行为，但在生产发布中通常无影响。
+
+
+-X github.com/.../core.build=v1.250608.0-3-g905c8f96
+→ 将指定包中的变量 build 的值在编译时设为该字符串（常用于注入版本号）。
+-s
+→ 去掉符号表（symbol table），减小体积。
+-w
+→ 去掉调试信息（DWARF），进一步减小体积。
