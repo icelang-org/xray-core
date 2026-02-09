@@ -4,10 +4,8 @@ go 1.24.3
 
 require (
 	github.com/cloudflare/circl v1.6.1
-	github.com/ghodss/yaml v1.0.1-0.20220118164431-d8423dcdf344
 	github.com/gorilla/websocket v1.5.3
 	github.com/miekg/dns v1.1.67
-	github.com/pelletier/go-toml v1.9.5
 	github.com/pires/go-proxyproto v0.8.1
 	github.com/quic-go/quic-go v0.54.0
 	github.com/refraction-networking/utls v1.8.0
@@ -41,5 +39,4 @@ require (
 	golang.org/x/text v0.27.0 // indirect
 	golang.org/x/tools v0.34.0 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20250528174236-200df99c418a // indirect
-	gopkg.in/yaml.v2 v2.4.0 // indirect
 )

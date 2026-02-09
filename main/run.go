@@ -10,7 +10,6 @@ import (
 	"regexp"
 	"runtime"
 	"runtime/debug"
-	"strings"
 	"syscall"
 	"time"
 
@@ -136,16 +135,7 @@ func dirExists(file string) bool {
 }
 
 func getRegepxByFormat() string {
-	switch strings.ToLower(*format) {
-	case "json":
-		return `^.+\.(json|jsonc)$`
-	case "toml":
-		return `^.+\.toml$`
-	case "yaml", "yml":
-		return `^.+\.(yaml|yml)$`
-	default:
-		return `^.+\.(json|jsonc|toml|yaml|yml)$`
-	}
+	return `^.+\.(json|jsonc)$`
 }
 
 func readConfDir(dirPath string) {

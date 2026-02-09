@@ -31,7 +31,7 @@ func mergeConfigs(files []*core.ConfigSource) (*conf.Config, error) {
 		if err != nil {
 			return nil, errors.New("failed to read config: ", file).Base(err)
 		}
-		c, err := ReaderDecoderByFormat[file.Format](r)
+		c, err := DecodeJSONConfig(r)
 		if err != nil {
 			return nil, errors.New("failed to decode config: ", file).Base(err)
 		}
@@ -54,12 +54,10 @@ func BuildConfig(files []*core.ConfigSource) (*core.Config, error) {
 
 type readerDecoder func(io.Reader) (*conf.Config, error)
 
-var ReaderDecoderByFormat = make(map[string]readerDecoder)
+// var ReaderDecoderByFormat = make(map[string]readerDecoder)
 
 func init() {
-	ReaderDecoderByFormat["json"] = DecodeJSONConfig
-	ReaderDecoderByFormat["yaml"] = DecodeYAMLConfig
-	ReaderDecoderByFormat["toml"] = DecodeTOMLConfig
+	// ReaderDecoderByFormat["json"] = DecodeJSONConfig
 
 	core.ConfigBuilderForFiles = BuildConfig
 	core.ConfigMergedFormFiles = MergeConfigFromFiles
