@@ -1,3 +1,5 @@
+大模型阅读地址
+https://xtls.github.io/llms-full.txt
 
 
 ADD https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/geoip.dat /tmp/geodat/geoip.dat
